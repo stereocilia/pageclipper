@@ -2,21 +2,7 @@
 <html>
   <head>
     <title>Page Clipper</title>
-    <style>
-      body {
-        min-width: 357px;
-        overflow-x: hidden;
-      }
-
-      img {
-        margin: 5px;
-        border: 2px solid black;
-        vertical-align: middle;
-        width: 75px;
-        height: 75px;
-      }
-    </style>
-
+    <link rel="stylesheet" href="popup.css">
     <!--
       - JavaScript and HTML must be in separate files: see our Content Security
       - Policy documentation[1] for details and explanation.
@@ -26,8 +12,16 @@
     <script src="popup.js"></script>
   </head>
   <body>
-  helo
-  <div id="mainContainer"></div>
+  <h1 style="text-align:center;">Page Clips</h1>
+    <div id="mainContainer">Loading clips...</div>
+    <div class="msg noclips">
+      <strong>You don't have anything clipped.</strong>
+      <ol>
+        <li>Select stuff from any web page by highlighting with your mouse</li>
+        <li>Right click your selection</li>
+        <li>Select 'Clip this...' from the popup menu</li>
+      </ol>
+    </div>
   </body>
 </html>
 
