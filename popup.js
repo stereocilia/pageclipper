@@ -7,6 +7,8 @@
  * binds UI functionality, saves changes back to storage.
  *
  */
+(function(){
+
 
  //
  // GLOBALS
@@ -86,12 +88,78 @@ function handleContentChanged(e){
 // RENDER
 //
 
+var MOUSEDOWN = false;
+var anchorx = 0;
+var anchory = 0;
+var mouseanchorx = 0;
+var mouseanchory = 0;
+var moveElement = null;
+window.mainContainerX = window.mainContainerX || 30;
+window.mainContainerY = window.mainContainerY || 30;
+
+function handleMousemove(e){
+  //use the current mouse position
+  var distancex = (e.x - mouseanchorx);
+  var distancey = (e.y - mouseanchory);
+  window.mainContainerX = (anchorx + distancex);
+  window.mainContainerY = (anchory + distancey);
+  moveElement.style.left = window.mainContainerX.toString() + 'px';
+  moveElement.style.top = window.mainContainerY.toString() + 'px';
+  //console.log('posx: ' + (anchorx + distancex).toString() + 'px' + ', posy: ' + (anchory + distancey).toString() + 'px');
+  //console.log('distancex: ' + distancex.toString());
+  //console.log('distancey: ' + distancey.toString());
+}
+
+function bindMousemoveToBody(e){
+  MOUSEDOWN = true;
+  document.body.addEventListener('mousemove', handleMousemove);
+  anchorx = e.target.offsetLeft;
+  anchory = e.target.offsetTop;
+  mouseanchorx = e.x;
+  mouseanchory = e.y;
+  moveElement = e.target;
+}
+function bindMouseupToBody(){
+  document.body.addEventListener('mouseup', handleMainContainerMouseup);
+}
+function unbindMouseupFromBody(){
+  document.body.removeEventListener('mouseup', handleMainContainerMouseup);
+}
+function unbindMousemoveFromBody(e){
+      MOUSEDOWN = false;
+      document.body.removeEventListener('mousemove', handleMousemove);
+      anchorx = 0;
+      anchory = 0;
+      mouseanchorx = 0;
+      mouseanchory = 0;
+      moveElement = null;
+}
+function handleMainContainerMousedown(e){
+  //e.preventDefault();
+  bindMousemoveToBody(e);
+  bindMouseupToBody();
+}
+function handleMainContainerMouseup(e){
+  //e.preventDefault();
+  unbindMousemoveFromBody(e);
+  unbindMouseupFromBody();
+}
 function renderClips(clips){
   var mainContainer = document.getElementById('mainContainer');
+  if(!mainContainer){
+    mainContainer = document.createElement('div');
+    mainContainer.setAttribute('id', 'mainContainer');
+    mainContainer.setAttribute('class', '_pageclipper_popup');
+    document.body.appendChild(mainContainer);
+    mainContainer.addEventListener('mousedown', handleMainContainerMousedown);
+    //mainContainer.addEventListener('mouseup', handleMainContainerMouseup);
+  }
   //clear content
   while (mainContainer.firstChild) {
       mainContainer.removeChild(mainContainer.firstChild);
   }
+  mainContainer.innerHTML = '<h1 style="float:right;cursor:default;">Page Clips</h1><br style="clear:both;">';
+  mainContainer.firstChild.addEventListener('mousedown', function(e){e.preventDefault();});
   for(var i=0;i<clips.length;i++){
     //main container
     var div = document.createElement('div');
@@ -149,11 +217,15 @@ function renderClips(clips){
   for(i=0;i<documentEditableContent.length;i++) {
     documentEditableContent[i].addEventListener('blur', handleContentChanged);
   }
+
+  if(clips.length < 1){
+    mainContainer.innerHTML = '<p style="text-align:center;font-weight:bold;">You have no clips</p>';
+  }
   //show or hide the no clips message
-  var msgNoClips = document.querySelector('.msg.noclips');
-  var msgNoClipsStyle = '';
-  if(clips.length < 1) msgNoClipsStyle = 'display:block;';
-  msgNoClips.setAttribute('style', msgNoClipsStyle);
+  //var msgNoClips = document.querySelector('.msg.noclips');
+  //var msgNoClipsStyle = '';
+  //if(clips.length < 1) msgNoClipsStyle = 'display:block;';
+  //msgNoClips.setAttribute('style', msgNoClipsStyle);
 }
 
 //
@@ -161,6 +233,7 @@ function renderClips(clips){
 //
 
 function loadClips(loadedData){
+  loadedData.clips = loadedData.clips || []; 
   registerClips(loadedData.clips);
   renderClips(loadedData.clips);
 }
@@ -176,6 +249,16 @@ function handleStorageChanged(changes, areaName){
 //
 
 function initialize(){
+  var mainContainer = document.getElementById('mainContainer');
+  if(mainContainer){
+    var mainContainerStyle = mainContainer.getAttribute('style');
+    if(mainContainerStyle && mainContainerStyle === 'display:none;'){
+      mainContainer.setAttribute('style', 'left:' + window.mainContainerX.toString() + 'px;top:' + window.mainContainerY.toString() + 'px;');
+    } else {
+      mainContainer.setAttribute('style', 'display:none;');
+      return 0;
+    }
+  }
   chrome.storage.onChanged.addListener(handleStorageChanged);
   loadClipsFromLocalStorage();  
 }
@@ -184,4 +267,8 @@ function initialize(){
 // RUN
 //
 
-document.addEventListener('DOMContentLoaded', initialize);
+initialize();
+
+//document.addEventListener('DOMContentLoaded', initialize);
+
+})();

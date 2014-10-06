@@ -38,8 +38,7 @@ chrome.storage.onChanged.addListener(handleStorageChanged);
     //sendResponse({farewell: "goodbye"});
   });
 */
-/*
 chrome.browserAction.onClicked.addListener(function(tab) {
-  chrome.tabs.executeScript(null, {file: "pullContentFromPage.js"});
+  chrome.tabs.executeScript(null, {file: "popup.js"});
+  chrome.tabs.insertCSS(null, {file: "popup.css"});
 });
-*/

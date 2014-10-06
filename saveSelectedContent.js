@@ -91,7 +91,7 @@ function getClipFromPage(){
     var div = document.createElement('div');
     div.appendChild(clonedSelection);
     clip = {
-      "html": cleanHTML(div.innerHTML), 
+      'html': cleanHTML(div.innerHTML), 
       'url': window.location.href,
       'uuid':uuid()
     };
