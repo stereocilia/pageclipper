@@ -48,7 +48,10 @@ function registerClips(clips){
   for(var i=0;i<_loadedClips.length;i++){
     _clipsIdMap[_loadedClips[i].uuid] = i;
   }
-  
+}
+function saveClipsToLocalStorage(callback){
+  callback = callback || function(){};
+  chrome.storage.local.set({'clips':_loadedClips}, callback);
 }
 
 //
@@ -58,7 +61,8 @@ function handleRemoveClick(e){
   var uuid = e.target.getAttribute('data-storeid');
   var clipIndex = _clipsIdMap[uuid];
   _loadedClips.splice(clipIndex, 1);
-  chrome.storage.local.set({'clips':_loadedClips});
+  saveClipsToLocalStorage();
+  //chrome.storage.local.set({'clips':_loadedClips});
 }
 function handleMoveupClick(e){
   //we don't check for valid indexes because only clips that can be moved have a 'move up' link
@@ -66,7 +70,16 @@ function handleMoveupClick(e){
   var clipIndex = _clipsIdMap[uuid];
   var removedClip = _loadedClips.splice(clipIndex, 1);
   _loadedClips.splice(clipIndex-1, 0, removedClip[0]);
-  chrome.storage.local.set({'clips':_loadedClips});
+  saveClipsToLocalStorage();
+}
+function handleContentChanged(e){
+  var uuid = e.target.getAttribute('data-storeid');
+  var newContent = e.target.innerHTML;
+  var clipIndex = _clipsIdMap[uuid];
+  if(_loadedClips[clipIndex].html !== newContent){
+    _loadedClips[clipIndex].html = newContent;
+    saveClipsToLocalStorage();
+  }
 }
 
 //
@@ -104,12 +117,19 @@ function renderClips(clips){
     deleteLink.setAttribute('class', 'control remove link');
     deleteLink.setAttribute('data-storeid', clips[i].uuid);
     deleteLink.innerHTML = '[x] remove';
+    //content wrapper
+    var divContent = document.createElement('div');
+    divContent.setAttribute('class', 'content');
+    divContent.setAttribute('data-storeid', clips[i].uuid);
+    //TODO: Make dynamically editable with button
+    //divContent.setAttribute('contenteditable', 'true');
+    divContent.innerHTML = clips[i].html;
     //appendings
     if(moveUpLink) divControls.appendChild(moveUpLink);
     divControls.appendChild(deleteLink);
     div.appendChild(divControls); 
     div.appendChild(divMeta); 
-    div.innerHTML += clips[i].html;
+    div.appendChild(divContent); 
     mainContainer.appendChild(div);
   }
   //bind control events
@@ -122,6 +142,12 @@ function renderClips(clips){
   var documentDeleteLinks = document.querySelectorAll('.control.remove');
   for(i=0;i<documentDeleteLinks.length;i++) {
     documentDeleteLinks[i].addEventListener('click', handleRemoveClick);
+  }
+  //handleContentChanged
+  //bind editable content
+  var documentEditableContent = document.querySelectorAll('.content');
+  for(i=0;i<documentEditableContent.length;i++) {
+    documentEditableContent[i].addEventListener('blur', handleContentChanged);
   }
   //show or hide the no clips message
   var msgNoClips = document.querySelector('.msg.noclips');
