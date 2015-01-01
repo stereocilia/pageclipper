@@ -1,10 +1,3 @@
-body {
-font-family: 'Arial';
-min-width: 357px;
-overflow-x: hidden;
-padding: 0 20px;
-}
-
 .clip {
 	background-color: aliceblue;
 	border: 1px solid black;
@@ -55,9 +48,23 @@ padding: 0 20px;
 	border: 2px solid black;
 	border-radius: 4px;
 	box-shadow: 0 0 15px 4px gray;
-	padding: 50px 30px 30px 30px;
+	
 	background-color: rgba(255,255,255, 0.9);
+	font-family: 'Arial' !important;
+	font-size: medium !important;
+	min-width: 357px;
+	
 	overflow: auto;
+	padding: 50px 30px 30px 30px;
+	z-index: 1100000010;
+}
+#mainContainer h1,
+#mainContainer h2,
+#mainContainer h3,
+#mainContainer h4,
+#mainContainer h5 {
+ font-family: 'Arial' !important;
+  
 }
 #mainContainer:hover{
 	cursor: move;
