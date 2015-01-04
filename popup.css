@@ -84,6 +84,9 @@
 #mainContainer h5 {
   font-size:1.08em !important;
 }
+#mainContainer small {
+  font-size:100%;
+}
 #mainContainer:hover{
 	cursor: move;
 }

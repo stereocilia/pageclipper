@@ -38,7 +38,29 @@ chrome.storage.onChanged.addListener(handleStorageChanged);
     //sendResponse({farewell: "goodbye"});
   });
 */
+/**
+ * Browser Button Clicked
+ * 
+ * Injects css
+ */
 chrome.browserAction.onClicked.addListener(function(tab) {
-  chrome.tabs.executeScript(null, {file: "popup.js"});
-  chrome.tabs.insertCSS(null, {file: "popup.css"});
+  //if a current tab does not exist
+  var urlPopup = chrome.extension.getURL("popup.html");
+  chrome.tabs.query({url:urlPopup}, function(tabsFounds){
+    if(tabsFounds.length === 0){	//no tabs for our extension are open
+      chrome.tabs.create({
+	url:urlPopup,
+	index:tab.index	//replace the tab's position with the new tab
+      });
+    } else {
+      //focus the tab for our extension
+      chrome.tabs.highlight({
+	tabs:tabsFounds[0].index,
+	windowId:tabsFounds[0].windowId
+      }, function(){});
+    }
+  });
+  
+  //chrome.tabs.executeScript(null, {file: "popup.js"});
+  //chrome.tabs.insertCSS(null, {file: "popup.css"});
 });

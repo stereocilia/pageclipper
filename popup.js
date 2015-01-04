@@ -144,16 +144,15 @@ function handleMainContainerMouseup(e){
   unbindMousemoveFromBody(e);
   unbindMouseupFromBody();
 }
-function renderClips(clips){
-  var mainContainer = document.getElementById('mainContainer');
-  if(!mainContainer){
+function addMainWrapperToPage(){
     mainContainer = document.createElement('div');
     mainContainer.setAttribute('id', 'mainContainer');
     mainContainer.setAttribute('class', '_pageclipper_popup');
     document.body.appendChild(mainContainer);
     mainContainer.addEventListener('mousedown', handleMainContainerMousedown);
-    //mainContainer.addEventListener('mouseup', handleMainContainerMouseup);
-  }
+    //mainContainer.addEventListener('mouseup', handleMainContainerMouseup);  
+}
+function addClipsToMainWrapper(mainContainer, clips){
   //clear content
   while (mainContainer.firstChild) {
       mainContainer.removeChild(mainContainer.firstChild);
@@ -226,6 +225,24 @@ function renderClips(clips){
   //var msgNoClipsStyle = '';
   //if(clips.length < 1) msgNoClipsStyle = 'display:block;';
   //msgNoClips.setAttribute('style', msgNoClipsStyle);
+}
+
+function renderClips(clips){
+  var mainContainer = document.getElementById('mainContainer');
+  if(!mainContainer){
+    addMainWrapperToPage();
+  }
+  
+  //add and iframe to the main wrapper
+  //var elIFrame = document.createElement('iframe');
+  //elIFrame.setAttribute('src', '/popup.html');
+  //while (mainContainer.firstChild) {
+  //    mainContainer.removeChild(mainContainer.firstChild);
+  //}
+  //mainContainer.appendChild(elIFrame);
+  
+  addClipsToMainWrapper(mainContainer, clips);
+
 }
 
 //
