@@ -1,92 +1,102 @@
 .clip {
-	background-color: aliceblue;
-	border: 1px solid black;
-	border-radius: 10px;
-	cursor: default;
-	padding: 5px 15px;
-	margin: 15px 0;
-	box-shadow: 0px 0px 12px gray;
+    background-color: aliceblue;
+    border: 1px solid black;
+    border-radius: 10px;
+    cursor: default;
+    padding: 5px 15px;
+    margin: 15px 0;
+    box-shadow: 0px 0px 12px gray;
 }
 
 .control.remove {
 }
 
 .link {
-	color: blue;
-	cursor: pointer;
-	display: inline-block;
-	text-decoration: underline;
-	margin: 0 3px;
+    color: blue;
+    cursor: pointer;
+    display: inline-block;
+    text-decoration: underline;
+    margin: 0 3px;
 }
 
 .controlContainer {
-	text-align: right;
+    text-align: right;
 }
 
 .msg.noclips {
-	display: none;
+    display: none;
 }
 
 .meta.info {
-	background-color: khaki;
-	border: 1px solid black;
-	border-radius: 4px;
-	padding: 5px;
-	margin: 10px 0;
-	width: 95% !important;
-	word-wrap:break-word;
+    background-color: khaki;
+    border: 1px solid black;
+    border-radius: 4px;
+    padding: 5px;
+    margin: 10px 0;
+    width: 95% !important;
+    word-wrap: break-word;
 }
 
 ._pageclipper_popup {
-	background-color: black;
-	width: 600px;
-	max-height: 80%;
-	position: fixed;
-	z-index: 9999;
-	top: 30px;
-	left: 30px;
+    background-color: black;
+    width: 600px;
+    max-height: 80%;
+    position: fixed;
+    z-index: 9999;
+    top: 30px;
+    left: 30px;
 }
+
 #mainContainer {
-	border: 2px solid black;
-	border-radius: 4px;
-	box-shadow: 0 0 15px 4px gray;
-	background-color: rgba(255,255,255, 0.9);
-	min-width: 357px;
-	overflow-x:hidden;
-	overflow-y:auto;
-	padding: 50px 30px 30px 30px;
-	z-index: 1100000010;
+    border: 2px solid black;
+    border-radius: 4px;
+    box-shadow: 0 0 15px 4px gray;
+    background-color: rgba(255, 255, 255, 0.9);
+    min-width: 357px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    padding: 50px 30px 30px 30px;
+    z-index: 1100000010;
 }
+
 #mainContainer p {
-	font-family: 'Arial' !important;
-	font-size: medium !important;
+    font-family: 'Arial' !important;
+    font-size: medium !important;
 }
+
 /* Explicit header style */
 #mainContainer h1,
 #mainContainer h2,
 #mainContainer h3,
 #mainContainer h4,
 #mainContainer h5 {
-  font-family: 'Arial' !important;
+    font-family: 'Arial' !important;
 }
+
 #mainContainer h1 {
-  font-size:2em !important;
+    font-size: 2em !important;
 }
+
 #mainContainer h2 {
-  font-size:1.5em !important;
+    font-size: 1.5em !important;
 }
+
 #mainContainer h3 {
-  font-size:1.25em !important;
+    font-size: 1.25em !important;
 }
+
 #mainContainer h4 {
-  font-size:1.17em !important;
+    font-size: 1.17em !important;
 }
+
 #mainContainer h5 {
-  font-size:1.08em !important;
+    font-size: 1.08em !important;
 }
+
 #mainContainer small {
-  font-size:100%;
+    font-size: 100%;
 }
-#mainContainer:hover{
-	cursor: move;
+
+#mainContainer:hover {
+    cursor: move;
 }
