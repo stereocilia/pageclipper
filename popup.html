@@ -14,14 +14,16 @@
 <body>
 <h1 style="text-align:center;">Page Clips</h1>
 
-<div id="mainContainer">Loading clips...</div>
-<div class="msg noclips">
+
+<div class="msg noclips" style="display:none;">
     <strong>You don't have anything clipped.</strong>
     <ol>
         <li>Select stuff from any web page by highlighting with your mouse</li>
         <li>Right click your selection</li>
         <li>Select 'Clip this...' from the popup menu</li>
     </ol>
+</div>
+<div id="mainContainer">
     <textarea id="editor"></textarea>
 </div>
 <script src="lib/tinymce/tinymce.min.js"></script>

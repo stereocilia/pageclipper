@@ -12,11 +12,11 @@ function handleInstall() {
     });
 }
 function handleStorageChanged(changes, areaName) {
-    if (changes.clips) {
+    //if (changes.clips) {
         //launch the pop up and tell it to refresh itself from local storage.
         //chrome.runtime.sendMessage({greeting: "hello"}, function(response) {
         //});
-    }
+    //}
 }
 
 //
