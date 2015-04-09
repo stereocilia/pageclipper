@@ -1,11 +1,23 @@
-// TinyMCE configuration
-// http://www.tinymce.com/wiki.php/Advanced
-// http://www.tinymce.com/wiki.php/Configuration
-// http://www.tinymce.com/wiki.php/Controls
-tinymce.init({
-    selector: "#editor",
-    style_formats_merge:true,
-    style_formats: [
-        {title: 'Highlight', block: 'span', styles: {'background-color': 'yellow'}},
-    ]
-});
+/**
+ * popup_html.js
+ *
+ * page code for popup.html
+ */
+
+function initializeTinyMCE(){
+    // TinyMCE configuration
+    // http://www.tinymce.com/wiki.php/Advanced
+    // http://www.tinymce.com/wiki.php/Configuration
+    // http://www.tinymce.com/wiki.php/Controls
+    tinymce.init({
+        selector: "#editor",
+        style_formats_merge:true,
+        style_formats: [
+            {title: 'Highlight', block: 'span', styles: {'background-color': 'yellow'}},
+        ]
+    });
+}
+
+document.body.onload = function(){
+    initializeTinyMCE();
+};
